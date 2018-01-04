@@ -1,8 +1,4 @@
 # Index
 
-### Hello World
-
-[hello_world.cpp][hello_world]
-
-
-[hello_world]: hello_world.cpp
+- [1006_input01.cpp](1006_input01.cpp)
+    - reads standard input
