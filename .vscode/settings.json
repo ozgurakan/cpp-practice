@@ -9,6 +9,12 @@
     },
     "files.associations": {
         "*.template": "yaml",
-        "iostream": "cpp"
+        "iostream": "cpp",
+        "__locale": "cpp",
+        "__string": "cpp",
+        "string": "cpp",
+        "string_view": "cpp",
+        "memory": "cpp",
+        "utility": "cpp"
     },    
 }
