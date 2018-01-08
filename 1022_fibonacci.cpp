@@ -14,7 +14,7 @@ int main()
     cin >> iterate;
     for (int i = 0; i < iterate; i++)
     {
-        cout << i << ": " << Fib(i) << endl;
+        cout << i+1 << ": " << Fib(i) << endl;
     }
     return 0;
 }
