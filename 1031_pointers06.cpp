@@ -23,5 +23,14 @@ int main(void)
         cout << "Memory allocation failed" << endl;
     }
 
+    int* biGPointer = new(nothrow) int[0x1fffffffffff];
+
+    if (biGPointer)
+    {
+        delete[] biGPointer;
+    }
+    else
+        cout << "Memory allocation failed this time." << endl;
+
     return 0;
 }
