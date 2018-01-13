@@ -18,6 +18,7 @@
         "utility": "cpp",
         "ios": "cpp",
         "algorithm": "cpp",
-        "ostream": "cpp"
+        "ostream": "cpp",
+        "__functional_base": "cpp"
     },    
 }
