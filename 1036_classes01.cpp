@@ -29,6 +29,7 @@ int main(void)
     human2->age = 11;
     human2->name = "AI";
     human2->Hello();
+    delete human2;
 
     return 0;
 }
