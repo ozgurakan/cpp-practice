@@ -29,6 +29,8 @@ int main(void)
     human2->age = 11;
     human2->name = "AI";
     human2->Hello();
+    cout << "&human2 : " << &human2 << endl;
+    cout << "human2 : " << human2 << endl;
     (*human2).Hello();
     delete human2;
 
