@@ -19,6 +19,17 @@ public:
         species = "Human";
     }
 
+    Animal(int inputAge)
+    {
+        age = inputAge;
+    }
+
+    Animal(int inputAge, string name)
+    {
+        age = inputAge;
+        species = name;
+    }
+
     void SetAge(int inputAge)
     {
         age = inputAge;
@@ -55,8 +66,10 @@ int main(void)
     cout << "Species: " << person->GetSpecies() << endl;
     person->SetSpecies("Donkey");
     cout << "Species: " << person->GetSpecies() << endl;
-
     delete person;
+
+    Animal* animal = new Animal(33, "Animal");
+    cout << animal->GetSpecies() << " age: " << animal->GetAge() << endl;
 
     return 0;
 }
