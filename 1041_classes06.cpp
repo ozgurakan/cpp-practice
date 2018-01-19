@@ -23,7 +23,7 @@ public:
 
     ~OzString()
     {
-        cout << "...in destructor" << endl;
+        cout << "...in destructor for " << &buffer << endl;
         if (buffer != NULL)
             delete[] buffer;
     }
@@ -37,12 +37,32 @@ public:
     {
         return buffer;
     }
+
+    void GetAddress()
+    {
+        cout << &buffer;
+    }
+
+    char* Address()
+    {
+        return buffer;
+    }
 };
+
+void PrintOzString(OzString str)
+{
+    cout << "in PrintOzString: " << str.GetString() << endl;
+    cout << "in PrintOzString: " << &str << endl;
+}
 
 int main(void)
 {
     OzString hello("Hello World");
-    cout << hello.GetString() << endl;
-    
+    cout << "in main: " << hello.GetString() << endl;
+    cout << "in main: ";
+    hello.GetAddress();
+    cout << endl;
+    PrintOzString(hello);
+
     return 0;
 }
