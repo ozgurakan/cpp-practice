@@ -1,16 +1,20 @@
 /*
 custom string class
+crashes as object is copied but buffer is passed
+by reference and this creates a problem with delete
+
+shallow and deep copy using copy constructor
 */
 #include <iostream>
 using namespace std;
 
-class OzString
+class BadString
 {
 private:
     char* buffer;
 
 public:
-    OzString(const char* givenString)
+    BadString(const char* givenString)
     {
         if (givenString != NULL)
         {
@@ -21,7 +25,7 @@ public:
             buffer = NULL;
     }
 
-    ~OzString()
+    ~BadString()
     {
         cout << "...in destructor for " << &buffer << endl;
         if (buffer != NULL)
@@ -49,20 +53,79 @@ public:
     }
 };
 
-void PrintOzString(OzString str)
+class GoodString
 {
-    cout << "in PrintOzString: " << str.GetString() << endl;
-    cout << "in PrintOzString: " << &str << endl;
+private:
+    char* buffer;
+
+public:
+    GoodString(const char* givenString)
+    {
+        if (givenString != NULL)
+        {
+            buffer = new char[strlen(givenString) + 1];
+            strcpy(buffer, givenString);
+        }
+        else
+            buffer = NULL;
+        cout << "buffer address: " << &buffer << endl;
+    }
+
+    ~GoodString();
+    int GetLength();
+    const char* GetString();    
+    char* Address();
+};
+
+GoodString::~GoodString()
+{
+    cout << "...in destructor for " << &buffer << endl;
+    if (buffer != NULL)
+        delete[] buffer;    
+}
+
+int GoodString::GetLength()
+{
+    return strlen(buffer);
+}
+
+const char* GoodString::GetString()
+{
+    return buffer;
+}
+
+char* GoodString::Address()
+{
+    return buffer;
+}
+
+
+void PrintBadString(BadString str)
+{
+    cout << "in PrintBadString: " << str.GetString() << endl;
+    cout << "in PrintBadString: " << &str << endl;
+}
+
+void PrintGoodString(GoodString str)
+{
+    cout << "in PrintGoodString: " << str.GetString() << endl;    
+    cout << "in PrintGoodString: " << &str << endl;
 }
 
 int main(void)
 {
-    OzString hello("Hello World");
+    /*
+    BadString hello("Hello World");
     cout << "in main: " << hello.GetString() << endl;
     cout << "in main: ";
     hello.GetAddress();
     cout << endl;
-    PrintOzString(hello);
+    PrintString(hello);
+    */
+    GoodString hello("Hello World");
+    cout << "hello address: " << &hello << endl;
+    cout << "in main: " << hello.GetString() << endl;
+    PrintGoodString(hello);
 
     return 0;
 }
