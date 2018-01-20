@@ -71,6 +71,11 @@ public:
         cout << "buffer address: " << &buffer << endl;
     }
 
+    GoodString(const GoodString& source)
+    {
+        //TODO
+    }
+
     ~GoodString();
     int GetLength();
     const char* GetString();    
