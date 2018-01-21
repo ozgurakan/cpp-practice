@@ -23,6 +23,7 @@ public:
         } 
         else
             buffer = NULL;
+        cout << "(def)Buffer points to: " << (unsigned int*)buffer << endl; // print address
     }
 
     ~BadString()
@@ -68,12 +69,19 @@ public:
         }
         else
             buffer = NULL;
-        cout << "buffer address: " << &buffer << endl;
+        cout << "(default) Buffer points to: " << (unsigned int*)buffer << endl; // print address
     }
 
-    GoodString(const GoodString& source)
+    GoodString(const GoodString& source) // Copy constructor
     {
-        //TODO
+        buffer = NULL;
+        cout << "Copying constructor" << endl;
+        if (source.buffer != NULL)
+        {
+            buffer = new char[strlen(source.buffer) + 1];
+            strcpy(buffer, source.buffer);
+            cout << "(copy) Buffer points to: " << (unsigned int*)buffer << endl; // print address
+        }
     }
 
     ~GoodString();
@@ -106,15 +114,14 @@ char* GoodString::Address()
 
 
 void PrintBadString(BadString str)
-{
-    cout << "in PrintBadString: " << str.GetString() << endl;
-    cout << "in PrintBadString: " << &str << endl;
+{    
+    cout << "(PrintBadString) Buffer points to: " << (unsigned int*)str.GetString() << endl;  
 }
 
 void PrintGoodString(GoodString str)
 {
-    cout << "in PrintGoodString: " << str.GetString() << endl;    
-    cout << "in PrintGoodString: " << &str << endl;
+    cout << "(PrintGoodString) Object address : " << &str << endl;
+    cout << "(PrintGoodString) Buffer points to: " << (unsigned int*)str.GetString() << endl;
 }
 
 int main(void)
@@ -128,9 +135,12 @@ int main(void)
     PrintString(hello);
     */
     GoodString hello("Hello World");
-    cout << "hello address: " << &hello << endl;
-    cout << "in main: " << hello.GetString() << endl;
+    cout << "(main) Object address : " << &hello << endl;
+    cout << "(main) Buffer points to: " << (unsigned int*)hello.GetString() << endl;
     PrintGoodString(hello);
+    cout << "(main) Buffer points to: " << (unsigned int*)hello.GetString() << endl;
+    PrintGoodString(hello);
+    cout << "(main) Buffer points to: " << (unsigned int*)hello.GetString() << endl;
 
     return 0;
 }
