@@ -9,6 +9,7 @@ void Ref(int& num);
 void Poin(int* num);
 void Test(int, int&);
 void Test2(int, int*);
+void Test3(int, const int&);
 
 int main(void)
 {
@@ -28,6 +29,8 @@ int main(void)
     number = 11;
     Test2(number, &result);
     cout << "(main) number= " << number << ", result= " << result << endl;
+
+    Test3(number, result);
     return 0;
 }
 
@@ -62,4 +65,16 @@ void Test(int num, int& res)
 void Test2(int num, int* res)
 {
     *res = num * num;
+}
+
+// prevent Test3 from changing res
+void Test3(int num, const int& res)
+{    
+    int temp = num * num;
+    if ( temp > res)
+        cout << num << " squared is bigger than " << res << endl;
+    else if (temp < res)
+        cout << num << " squared is smaller than " << res << endl;
+    else
+        cout << num << " squared is equal to " << res << endl;
 }
