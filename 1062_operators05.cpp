@@ -19,6 +19,11 @@ public:
         else
             return false;        
     }
+
+    bool operator != (const Human& inHuman)
+    {
+        return !(this->operator==(inHuman));
+    }
 };
 
 class Animal
