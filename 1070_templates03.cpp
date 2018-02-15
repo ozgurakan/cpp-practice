@@ -10,24 +10,31 @@ class Animal
 {
 private:
     bool is_alive;
+    bool is_male;
 
 protected:    
     string type;
 
 public:
-    Animal(bool in_is_alive = true) : is_alive(in_is_alive) { 
+    Animal(bool in_is_male = true)
+    : is_male(in_is_male) { 
+        is_alive = true;
         type = "animal";
     }
     
-    bool IsAlive() {
+    const bool IsAlive() {
         return is_alive;
+    }
+
+    const bool IsMale() {
+        return is_male;
     }
 
     void Died() {
         is_alive = false;
     }
 
-    string GetType() {
+    const string GetType() {
         return type;
     }
 
@@ -38,7 +45,7 @@ public:
             return "dead";
     }
 
-    virtual string GetName() = 0;
+    virtual const string GetName() = 0;
 
     virtual ~Animal() {}
 };
@@ -49,11 +56,12 @@ private:
     string name;
 
 public:
-    Monkey(string in_name = "monkey") : Animal(true), name(in_name) {
+    Monkey(bool in_is_male, string in_name = "monkey")
+    : Animal(in_is_male), name(in_name) {
         type = "monkey";
     }
 
-    string GetName() {
+    const string GetName() {
         return name;
     }
 
@@ -66,11 +74,16 @@ private:
     string name;
 
 public:
-    Human(string in_name): Animal(), name(in_name) {
+    Human(bool in_is_male, string in_name)
+    : Animal(in_is_male), name(in_name) {
         type = "human";
     }
 
-    string GetName() {
+    void SetName(string in_name) {
+        name = in_name;
+    }
+
+    const string GetName() {
         return name;
     }
 
@@ -78,13 +91,18 @@ public:
 };
 
 void GetInfo(Animal* animal) {
+    string sex;
+    if (animal->IsMale())
+        sex = "male";
+    else
+        sex = "female";
     Monkey* monkey = dynamic_cast<Monkey*>(animal);
     if (monkey)
         cout << monkey->GetType() << ":" << monkey->GetName() << " is " << monkey->GetStatus() << endl;
     
     Human* human = dynamic_cast<Human*>(animal);
     if (human)
-        cout << human->GetType() << ":" << human->GetName() << " is " << human->GetStatus() << endl;
+        cout << human->GetType() << ":" << human->GetName() << " is " << sex << " and " << human->GetStatus() << endl;
 }
 
 template <class T>
@@ -94,7 +112,18 @@ private:
     T* male;
     T* female;
 public:
-    Parents(T* in_male, T* in_female): male(in_male), female(in_female) { }
+    Parents(T* in_parent1, T* in_parent2) { 
+        if (in_parent1->IsMale() != in_parent2->IsMale()) {
+            if (in_parent1->IsMale()) {
+                male = in_parent1;
+                female = in_parent2;
+            } else {
+                female = in_parent1;
+                male = in_parent2;
+            }                
+        } else
+            throw invalid_argument("need opposite sexes to have a baby");
+    }
 
     T* GetMale() {
         return male;
@@ -104,21 +133,24 @@ public:
         return female;
     }
 
-    T* CreateChild(string name) {
-        T* child = new T(name);
+    T* CreateBoy(string name) {
+        T* child = new T(false, name);
         return child;
     }
 
-    T* CreateChildv2(string name);
+    T* CreateChild(string name);
 
     ~Parents() {}
 
 };
 
 template <class T>
-T* Parents<T>::CreateChildv2(string name)
+T* Parents<T>::CreateChild(string name)
 {
-    return new T(name);
+    srand(time(NULL));
+    int index = rand() % 2;
+    bool sex[] = {true, false};
+    return new T(sex[index], name);
 }
 
 int main(void)
@@ -128,22 +160,21 @@ int main(void)
     monkey->Died();
     GetInfo(monkey);
 
-    Human* man = new Human("Jack");
-    Human* woman = new Human("Julie");
+    Human* man = new Human(true, "Jack");
+    Human* woman = new Human(false, "Julie");
     GetInfo(man);
     GetInfo(woman);
     
     Parents<Human> parents(man, woman);
     // or alternatively
     //Parents<Human> parents = Parents<Human>(man, woman);
-    Human* child = parents.CreateChild("Baby");
+    Human* child = parents.CreateBoy("Baby");
     GetInfo(child);
 
     Parents<Human>* parents2 = new Parents<Human>(man, woman);
-    Human* child2 = parents2->CreateChildv2("Baby2");
+    Human* child2 = parents2->CreateChild("Baby2");
+    child2->SetName("Sea");
     GetInfo(child2);
 
-
-    //TODO: set male, female objects static
     return 0;
 }
