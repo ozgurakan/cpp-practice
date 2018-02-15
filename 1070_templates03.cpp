@@ -91,18 +91,35 @@ template <class T>
 class Parents
 {
 private:
-    T male;
-    T female;
+    T* male;
+    T* female;
 public:
-    Parents(T& in_male, T& in_female): male(in_male), female(in_female) { }
+    Parents(T* in_male, T* in_female): male(in_male), female(in_female) { }
 
-    T CreateChild(string name) {
-        return new T(name);
+    T* GetMale() {
+        return male;
     }
+
+    T* GetFemale() {
+        return female;
+    }
+
+    T* CreateChild(string name) {
+        T* child = new T(name);
+        return child;
+    }
+
+    T* CreateChildv2(string name);
 
     ~Parents() {}
 
 };
+
+template <class T>
+T* Parents<T>::CreateChildv2(string name)
+{
+    return new T(name);
+}
 
 int main(void)
 {
@@ -114,13 +131,19 @@ int main(void)
     Human* man = new Human("Jack");
     Human* woman = new Human("Julie");
     GetInfo(man);
+    GetInfo(woman);
     
-
-    //TODO: fix this part
-    template <class Human>
-    Parents* parents = new Parents(man, woman);
-    Human* child = parents->CreateChild("Baby");
+    Parents<Human> parents(man, woman);
+    // or alternatively
+    //Parents<Human> parents = Parents<Human>(man, woman);
+    Human* child = parents.CreateChild("Baby");
     GetInfo(child);
 
+    Parents<Human>* parents2 = new Parents<Human>(man, woman);
+    Human* child2 = parents2->CreateChildv2("Baby2");
+    GetInfo(child2);
+
+
+    //TODO: set male, female objects static
     return 0;
 }
