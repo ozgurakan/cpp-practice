@@ -174,7 +174,11 @@ int main(void)
     Parents<Human>* parents2 = new Parents<Human>(man, woman);
     Human* child2 = parents2->CreateChild("Baby2");
     child2->SetName("Sea");
-    GetInfo(child2);
-
+    GetInfo(child2);    
+    
+    delete parents2;
+    delete man;
+    delete woman;
+    
     return 0;
 }
