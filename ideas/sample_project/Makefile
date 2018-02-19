@@ -17,4 +17,7 @@ being.o: being.cpp
 		$(CC) $(CFLAGS) -c being.cpp
 
 clean:
+	rm -f hello.o thing.o being.o
+
+clean_all:
 	rm -f hello.o thing.o being.o $(TARGET)

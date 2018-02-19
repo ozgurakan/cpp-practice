@@ -1,0 +1,14 @@
+CC = g++
+CFLAGS = -g -Wall
+TARGET = a.out
+
+SRC = hello.cpp being.cpp thing.cpp
+OBJ = $(SRC:.cpp = .o) 
+
+all: $(TARGET)
+
+$(TARGET): $(OBJ)
+		$(CC) $(CFLAGS) -o $(TARGET) $(OBJ)
+
+clean:
+	rm -f *.o $(TARGET)
