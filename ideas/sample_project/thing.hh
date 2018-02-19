@@ -2,14 +2,21 @@
 #ifndef THING_H
 #define THING_H
 #include <string>
+using namespace std;
 
 class Thing
 {
 protected:
-    bool is_real;
+    bool imaginary;
+    string name;
 public:
-    Thing(bool in_is_real = true): is_real(in_is_real) { }
+    Thing(bool in_imaginary = true): imaginary(in_imaginary) { }
+    const bool is_real();
     string get_type();
+    
+    void set_name(string);
+    const string get_name();
+
     virtual ~Thing() { };
 };
 

@@ -1,5 +1,11 @@
 #include "being.hh"
 
-const bool Being::can_think() {
-    return can_think;
+const bool Being::has_brain() {
+    return brain;
+}
+
+const string Being::get_type() {
+    if (brain)
+        return "thinker";
+    return "non-thinker";
 }
