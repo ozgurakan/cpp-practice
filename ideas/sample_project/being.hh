@@ -9,7 +9,7 @@ protected:
     bool brain;
 
 public:
-    Being(bool in_brain = false): Thing(false), brain(in_brain) { }
+    Being(bool in_brain = false);
     //TODO: Being(Thing in_thing);
 
     const bool has_brain();

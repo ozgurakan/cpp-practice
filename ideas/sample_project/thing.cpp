@@ -1,5 +1,7 @@
 #include "thing.hh"
 
+Thing::Thing(bool in_imaginary): imaginary(in_imaginary) { }
+
 const bool Thing::is_real() {
     return !imaginary;
 }

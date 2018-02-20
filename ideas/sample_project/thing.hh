@@ -10,7 +10,7 @@ protected:
     bool imaginary;
     string name;
 public:
-    Thing(bool in_imaginary = true): imaginary(in_imaginary) { }
+    Thing(bool in_imaginary = false);
     const bool is_real();
     string get_type();
     

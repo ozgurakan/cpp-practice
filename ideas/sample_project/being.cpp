@@ -1,5 +1,7 @@
 #include "being.hh"
 
+Being::Being(bool in_brain): Thing(false), brain(in_brain) { }
+
 const bool Being::has_brain() {
     return brain;
 }
