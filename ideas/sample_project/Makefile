@@ -1,3 +1,6 @@
+#https://www.cs.swarthmore.edu/~newhall/unixhelp/howto_makefiles.html
+#https://hiltmon.com/blog/2013/07/03/a-simple-c-plus-plus-project-structure/
+
 CC = g++
 CFLAGS = -g -Wall
 TARGET = a.out
